@@ -23,6 +23,7 @@ services:
       - MYSQL_DATABASE=hoctienganh
       - MYSQL_HOST=db
       - NODE_ENV=production
+      - NODE_OPTIONS=--max-old-space-size=2048
     ports:
       - '9000:9000'
 volumes:
