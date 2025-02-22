@@ -14,7 +14,7 @@ services:
 
   backend:
     build:
-      context: ./../hoctienganh-be
+      context: ./../backend_el_2025
       dockerfile: Dockerfile
     container_name: backend
     restart: always
