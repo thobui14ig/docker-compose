@@ -1,34 +1,30 @@
 version: '3'
 services:
- db:
-   image: mysql:latest
-   container_name: mysql
-   ports:
-     - "3306:3306"
-   environment:
-     - MYSQL_ROOT_PASSWORD=111111
-     - MYSQL_DATABASE=hoctienganh
-   volumes:
-     - /mysql-volume:/var/lib/mysql 
+  db:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=111111
+      - MYSQL_DATABASE=hoctienganh
+    volumes:
+      - /mysql-volume:/var/lib/mysql 
 
-  # ucademic-service:
-  #   build:
-  #     context: ./../ucademic-service
-  #     dockerfile: Dockerfile
-  #   container_name: ucademicService
-  #   restart: always
-  #   environment:
-  #     - DB_TYPE=postgres
-  #     - DB_HOST=postgres
-  #     - DB_PORT=5432
-  #     - DB_USERNAME=root
-  #     - DB_PASSWORD=111111
-  #     - DB_DATABASE=demo
-  #     - KAFKAJS_NO_PARTITIONER_WARNING=1
-  #     - KAFKA_HOST=kafka
-  #     - KAFKA_PORT=19092
-  #   ports:
-  #     - '5003:5003'
+  backend:
+    build:
+      context: ./../hoctienganh-be
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=111111
+      - MYSQL_DATABASE=hoctienganh
+      - MYSQL_HOST=db
+      - NODE_ENV=production
+    ports:
+      - '9000:9000'
 volumes:
   mysql-volume:
     driver: local
